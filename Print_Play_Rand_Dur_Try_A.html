@@ -15,7 +15,7 @@
             
              const myCtx = new AudioContext();
             
-            function playNote(someContext, frequency, dur)
+            function playNote(someContext, frequency, dur, waveType)
         {
             const osc1 = new OscillatorNode(someContext);
             const osc2 = new OscillatorNode(someContext);
@@ -26,9 +26,9 @@
             osc1.frequency.value = frequency;
             osc2.frequency.value = frequency*2.01;
             osc3.frequency.value = frequency*1.01;
-            osc1.type = "triangle"
-            osc2.type = "triangle"
-            osc3.type = "sine"
+            osc1.type = waveType || "triangle"
+            osc2.type = waveType || "triangle"
+            osc3.type = waveType || "sine"
             gain.gain.value = 0;
 
             osc1.connect(gain).connect(someContext.destination);
@@ -73,6 +73,13 @@
 
         }
 
+        //Create random wave type picker function
+        const waveTypes = ["sine", "triangle", "square", "sawtooth"];
+        const randomWaveType = function() {
+            let randWave = waveTypes[Math.floor(Math.random() * waveTypes.length)];
+            return randWave;
+        }
+
         // 3. Set up references to the HTML elements
         const button = document.getElementById("Pick_Play_Button");
         const resultDisplay = document.getElementById("result");
@@ -87,7 +94,7 @@
     
 
             //5. play the note
-            document.querySelector("#Pick_Play_Button").onclick = () => playNote(myCtx, randomPitch(), randomDuration());
+            document.querySelector("#Pick_Play_Button").onclick = () => playNote(myCtx, randomPitch(), randomDuration(), randomWaveType());
        
     </script>
 
