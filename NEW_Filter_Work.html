@@ -32,14 +32,24 @@
         lpFilter.connect(ctx.destination);
 
         //button functionality
-        Start1.onclick = () => {
+        button.addEventListener("click", () => {
             mainOsc.start();
             lfo.start();
-        };
-        Stop1.onclick = () => {
+        });
+        button.addEventListener("click", () => {
             mainOsc.stop();
             lfo.stop();
-        };
+        });
+
+
+       //Start1.onclick = () => {
+        //    mainOsc.start();
+        //    lfo.start();
+        //};
+       // Stop1.onclick = () => {
+        //    mainOsc.stop();
+        //    lfo.stop();
+       // };
       
 
         </script>
