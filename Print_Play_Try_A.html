@@ -37,8 +37,8 @@
 
             let now = someContext.currentTime;
 
-            gain.gain.linearRampToValueAtTime(0.25, now + 0.01); //attack
-            gain.gain.linearRampToValueAtTime(0.10, now + 0.01 + 0.2)
+            gain.gain.linearRampToValueAtTime(0.25, now + (duration*0.01)); //attack
+            gain.gain.linearRampToValueAtTime(0.10, now + (duration*0.2))
             gain.gain.linearRampToValueAtTime(0, now + duration); //release
 
             osc1.start();
@@ -74,7 +74,7 @@
             resultDisplay.textContent = randomChoice;
 
             //5. play the note
-            document.querySelector("#Pick_Play_Button").onclick = () => playNote(myCtx, randomPitch(), 2);
+            document.querySelector("#Pick_Play_Button").onclick = () => playNote(myCtx, randomPitch(), 0.4);
         });
     </script>
 
