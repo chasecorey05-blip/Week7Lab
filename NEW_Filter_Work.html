@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StartStop LFO</title>
+    </head>
+<body>
+    <button id="Start1">Start</button>
+    <button id="Stop1">Stop</button>
+    <script>
+        const ctx = new AudioContext();
+
+        const mainOsc = new OscillatorNode(ctx);
+        mainOsc.type = "sawtooth";
+        mainOsc.frequency.value = 330;
+
+        const lpFilter = new BiquadFilterNode(ctx);
+        lpFilter.type = "bandpass";
+        lpFilter.frequency.value = 1500;
+
+        const lfo = new OscillatorNode(ctx);
+        lfo.type = "square";
+        lfo.frequency.value = 2; // LFO frequency in Hz
+
+        const lfoGain = new GainNode(ctx);
+        lfoGain.gain.setValueAtTime(500, ctx.currentTime); // Modulation depth
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(lpFilter.frequency);
+
+        mainOsc.connect(lpFilter);
+        lpFilter.connect(ctx.destination);
+
+        //button functionality
+        Start1.onclick = () => {
+            mainOsc.start();
+            lfo.start();
+        };
+        Stop1.onclick = () => {
+            mainOsc.stop();
+            lfo.stop();
+        };
+      
+
+        </script>
+
+</body>
+</html>
