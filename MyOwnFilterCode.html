@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StartStop LFO</title>
+    </head>
+<body>
+    <button id="Start1">Start</button>
+    <button id="Stop1">Stop</button>
+    <input id="rate" type="range" min="1" max="20" value="1"><label id="rate">rate</label>
+    <input id="depth" type="range" min="1" max="20" value="1"><label id="depth">depth</label>
+    <script>
+        const ctx = new AudioContext();
+
+        const mainOsc = new OscillatorNode(ctx);
+        mainOsc.type = "sawtooth";
+        mainOsc.frequency.value = 330;
+
+        const lpFilter = new BiquadFilterNode(ctx);
+        lpFilter.type = "lowpass";
+        lpFilter.frequency.value = 1500;
+        lpFilter.Q = 10;
+
+        const lfo = new OscillatorNode(ctx);
+        lfo.type = "sine";
+        lfo.frequency.value = 2; // LFO frequency in Hz
+
+        const lfoDepth = new GainNode(ctx);
+        lfoDepth.gain.setValueAtTime(500, ctx.currentTime); // Modulation depth
+
+        lfo.connect(lfoDepth);
+        lfoDepth.connect(lpFilter.frequency);
+
+        mainOsc.connect(lpFilter);
+        lpFilter.connect(ctx.destination);
+
+
+        const button = document.getElementById("Start1");
+
+        //button functionality
+        button.addEventListener("click", () => {
+            mainOsc.start();
+            lfo.start();
+        });
+        const stopButton = document.getElementById("Stop1");
+        stopButton.addEventListener("click", () => {
+            mainOsc.stop();
+            lfo.stop();
+        });
+
+        //add slider functionality
+
+        const rateSlider = document.getElementById("rate");
+        const depthSlider = document.getElementById("depth");
+
+        rateSlider.addEventListener("input", () => {
+            lfo.frequency.value = rateSlider.value;
+        });
+
+        depthSlider.addEventListener("input", () => {
+            lfoDepth.gain.setValueAtTime(depthSlider.value * 100, ctx.currentTime);
+        });
+
+    </script>
+
+</body>
+</html>
