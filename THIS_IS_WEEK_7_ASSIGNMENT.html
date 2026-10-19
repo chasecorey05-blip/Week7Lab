@@ -44,7 +44,7 @@
 
             let now = someContext.currentTime;
 
-            gain.gain.linearRampToValueAtTime(0.25, now + 0.01); //attack
+            gain.gain.linearRampToValueAtTime(0.1, now + 0.01); //attack
             gain.gain.linearRampToValueAtTime(0.10, now + 0.01 + 0.2)
             gain.gain.linearRampToValueAtTime(0, now + duration); //release
 
@@ -60,7 +60,7 @@
         }
         
         // 1. Define the array of choices
-        const midiPitches1 = [60, 62, 63, 67, 69, 72];
+        const midiPitches1 = [50, 54, 55, 57, 58, 59];
 
         // 2. Create the random picker function
         const randomPitch1 = function() {
@@ -251,7 +251,7 @@
             osc12.stop(now + duration);
         }
 
-        const midiPitches4 = [60, 62, 63, 67, 69, 72];
+        const midiPitches4 = [60, 63, 69, 72, 50, 52];
 
         const randomPitch4 = function() {
             let randomMidiNote = midiPitches4[Math.floor(Math.random() * midiPitches4.length)];
